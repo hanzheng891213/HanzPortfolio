@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" fill="none">
+  <rect width="400" height="280" fill="#f5f5f5"/>
+  <!-- Phone body -->
+  <rect x="148" y="16" width="104" height="216" rx="14" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- Notch -->
+  <rect x="176" y="26" width="48" height="6" rx="3" fill="#1a1a1a"/>
+  <!-- Screen content - header -->
+  <rect x="164" y="46" width="72" height="6" rx="3" fill="#1a1a1a"/>
+  <rect x="164" y="60" width="48" height="4" rx="2" fill="#999"/>
+  <!-- Post cards inside phone -->
+  <rect x="164" y="80" width="72" height="36" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+  <circle cx="176" cy="92" r="8" fill="#bbb"/>
+  <rect x="190" y="86" width="40" height="5" rx="2.5" fill="#999"/>
+  <rect x="190" y="96" width="32" height="4" rx="2" fill="#bbb"/>
+  <!-- Post 2 -->
+  <rect x="164" y="124" width="72" height="36" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+  <circle cx="176" cy="136" r="8" fill="#bbb"/>
+  <rect x="190" y="130" width="40" height="5" rx="2.5" fill="#999"/>
+  <rect x="190" y="140" width="28" height="4" rx="2" fill="#bbb"/>
+  <!-- Post 3 -->
+  <rect x="164" y="168" width="72" height="36" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+  <circle cx="176" cy="180" r="8" fill="#bbb"/>
+  <rect x="190" y="174" width="40" height="5" rx="2.5" fill="#999"/>
+  <rect x="190" y="184" width="36" height="4" rx="2" fill="#bbb"/>
+  <!-- Nav dots -->
+  <circle cx="192" cy="218" r="2.5" fill="#999"/>
+  <circle cx="200" cy="218" r="2.5" fill="#1a1a1a"/>
+  <circle cx="208" cy="218" r="2.5" fill="#999"/>
+  <!-- Connected nodes on left side -->
+  <circle cx="48" cy="80" r="24" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+  <circle cx="48" cy="80" r="10" fill="#1a1a1a"/>
+  <path d="M72 80 L80 80" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Node 2 -->
+  <circle cx="40" cy="180" r="18" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+  <circle cx="40" cy="180" r="7" fill="#999"/>
+  <path d="M58 180 L64 180" stroke="#999" stroke-width="2"/>
+  <!-- Connection lines -->
+  <path d="M48 104 Q48 142 40 162" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+  <!-- Right side nodes -->
+  <circle cx="340" cy="60" r="16" fill="#fff" stroke="#999" stroke-width="2"/>
+  <circle cx="340" cy="60" r="6" fill="#999"/>
+  <path d="M324 60 L316 60" stroke="#999" stroke-width="2"/>
+  <!-- Node -->
+  <circle cx="350" cy="140" r="20" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+  <circle cx="350" cy="140" r="8" fill="#1a1a1a"/>
+  <path d="M330 140 L322 140" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- Node -->
+  <circle cx="335" cy="220" r="14" fill="#fff" stroke="#999" stroke-width="2"/>
+  <circle cx="335" cy="220" r="5" fill="#bbb"/>
+  <path d="M321 220 L314 220" stroke="#999" stroke-width="1.5"/>
+  <!-- Connecting dashed lines -->
+  <path d="M340 76 Q340 108 350 120" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+  <path d="M350 160 Q350 190 335 206" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/>
+</svg>

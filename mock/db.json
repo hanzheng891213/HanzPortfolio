@@ -1,0 +1,71 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "电商管理后台",
+      "description": "基于 Vue 3 + Element Plus 的后台管理系统，包含商品管理、订单处理、数据统计等功能",
+      "cover": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+      "link": "https://github.com/hanzheng891213"
+    },
+    {
+      "id": 2,
+      "title": "移动端社区应用",
+      "description": "基于 Vue 3 + Vant UI 的移动端社区，支持发帖、评论、点赞、关注等功能",
+      "cover": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop",
+      "link": "https://github.com/hanzheng891213"
+    },
+    {
+      "id": 3,
+      "title": "可视化数据大屏",
+      "description": "使用 ECharts + Vue 3 实现的数据可视化项目，包含实时数据监控与交互式图表",
+      "cover": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+      "link": "https://github.com/hanzheng891213"
+    },
+    {
+      "id": 4,
+      "title": "个人博客系统",
+      "description": "基于 Vue 3 + Markdown 的个人博客，支持文章发布、标签分类、搜索功能",
+      "cover": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop",
+      "link": "https://github.com/hanzheng891213"
+    },
+    {
+      "id": 5,
+      "title": "组件库搭建实践",
+      "description": "从零搭建 Vue 3 组件库，包含按钮、表单、弹窗等常用组件的封装与文档生成",
+      "cover": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop",
+      "link": "https://github.com/hanzheng891213"
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "category": "前端基础",
+      "icon": "&#xE000;",
+      "description": "熟练掌握 HTML5、CSS3 和 JavaScript（ES6+），能够编写符合语义化、响应式的页面，并实现交互逻辑与动画效果。"
+    },
+    {
+      "id": 2,
+      "category": "Vue 技术栈",
+      "icon": "&#xE001;",
+      "description": "熟悉 Vue 3 及其生态，具备 Pinia 状态管理、Vite 构建工具的实际项目经验，能独立开发及维护中大型单页应用。"
+    },
+    {
+      "id": 3,
+      "category": "工程化与工具",
+      "icon": "&#xE002;",
+      "description": "了解前端工程化流程，可使用 Vite 配置项目，了解 Node.js 基础，能够配合 CLI 工具进行开发调试。"
+    },
+    {
+      "id": 4,
+      "category": "网络与通信",
+      "icon": "&#xE003;",
+      "description": "熟悉 HTTP 协议，能使用 Axios 进行前后端数据交互，并对接口封装、错误拦截等有实践经验。"
+    },
+    {
+      "id": 5,
+      "category": "扩展技能",
+      "icon": "&#xE004;",
+      "description": "具备 C 语言、Java 基础，了解 Linux 常用命令，可进行基本服务端协作与环境部署；熟悉 Claude Code 等 AI 辅助开发工具，提升开发效率。"
+    }
+  ]
+}

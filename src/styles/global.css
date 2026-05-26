@@ -1,0 +1,161 @@
+/* ===== CSS Custom Properties Theme System ===== */
+:root {
+  --font-display: 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+  --font-body: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', sans-serif;
+  --font-kai: 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  --font-mono: 'Consolas', 'Courier New', 'Source Code Pro', monospace;
+
+  /* Light Theme — soft mint + warm cream */
+  --bg-primary: #b3e5ce;
+  --bg-secondary: #9be1d9d5;
+  --bg-card: #4d979819;
+  --bg-card-hover: #5aaba126;
+  --bg-input: #9cdfd0;
+  --text-primary: #1a1c1d;
+  --text-secondary: #4a5556;
+  --text-muted: #7a8a8b;
+  --border-color: rgba(0, 0, 0, 0.06);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --accent: #1a7a6e;
+  --accent-bright: #28b8ac;
+  --accent-dim: #0f5c52;
+  --accent-coral: #5ae8c5;
+  --accent-glow: rgba(26, 122, 110, 0.18);
+  --accent-glow-strong: rgba(26, 122, 110, 0.25);
+  --accent-coral-glow: rgba(90, 232, 225, 0.12);
+  --glass-bg: rgba(199, 251, 243, 0.603);
+  --glass-border: rgba(0, 0, 0, 0.05);
+}
+
+html.dark {
+  --bg-primary: #1a3f43;
+  --bg-secondary: #1e484d;
+  --bg-card: #24595e;
+  --bg-card-hover: #2a6b6b;
+  --bg-input: #1e484d;
+  --text-primary: #e8edea;
+  --text-secondary: #b0c0bd;
+  --text-muted: #8a9a97;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.04);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --accent: #8bf3cb;
+  --accent-bright: #a0fdc5;
+  --accent-dim: #408a76;
+  --accent-coral: #6ef0be;
+  --accent-glow: rgba(128, 221, 240, 0.2);
+  --accent-glow-strong: rgba(128, 221, 240, 0.3);
+  --accent-coral-glow: rgba(110, 240, 214, 0.12);
+  --glass-bg: rgba(26, 63, 67, 0.372);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-bright);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: var(--accent-glow-strong);
+  color: var(--text-primary);
+}
+
+/* ===== Page Container ===== */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 40px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  max-width: 540px;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 100px 20px 60px;
+  }
+}
