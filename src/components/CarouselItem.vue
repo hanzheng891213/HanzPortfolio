@@ -67,7 +67,7 @@ defineProps<{
 .carousel-item__placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 40%, #c8c8c8 100%);
+  background: #26828eee;
 }
 
 /* ── Text overlay ── */

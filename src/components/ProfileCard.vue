@@ -86,6 +86,7 @@ const menuOpen = ref(false)
 .name {
   font-family: var(--font-display);
   font-size: 32px;
+  font-weight: 600;
   line-height: 1;
   color: var(--text-primary);
 }

@@ -64,16 +64,16 @@ defineEmits<{
     box-shadow: 0 0 0 0 var(--accent-glow);
   }
   12% {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 5px var(--accent-glow);
+    transform: scale(1.3);
+    box-shadow: 0 0 0 2px var(--accent-glow);
   }
   24% {
     transform: scale(1);
     box-shadow: 0 0 0 0 var(--accent-glow);
   }
   36% {
-    transform: scale(1.08);
-    box-shadow: 0 0 0 3px var(--accent-glow);
+    transform: scale(1.2);
+    box-shadow: 0 0 0 1px var(--accent-glow);
   }
   48% {
     transform: scale(1);

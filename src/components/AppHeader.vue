@@ -109,6 +109,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .header__logo-text {
   font-family: var(--font-display);
   font-size: 1.6rem;
+  font-weight: 900;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   text-decoration: none;
