@@ -1,0 +1,7 @@
+name = "hanzdev"
+compatibility_date = "2025-05-28"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
