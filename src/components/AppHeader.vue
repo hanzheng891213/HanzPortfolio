@@ -1,12 +1,11 @@
 <template>
   <header class="header" :class="{ 'header--scrolled': scrolled }">
     <div class="header__inner">
-      <a href="#" class="header__logo" @click.prevent="scrollTo('home')">
-        <div class="header__logo-text">HanZheng</div>
+      <a class="header__logo" @click.prevent="scrollTo('home')">
+        <div class="header__logo-text">Han Zheng</div>
       </a>
       <nav class="header__nav">
         <a
-          href="#home"
           class="header__link"
           :class="{ 'header__link--active': activeSection === 'home' }"
           @click.prevent="scrollTo('home')"
@@ -14,7 +13,6 @@
           首页
         </a>
         <a
-          href="#portfolio"
           class="header__link"
           :class="{ 'header__link--active': activeSection === 'portfolio' }"
           @click.prevent="scrollTo('portfolio')"
@@ -22,7 +20,6 @@
           作品集
         </a>
         <a
-          href="#tech-stack"
           class="header__link"
           :class="{ 'header__link--active': activeSection === 'tech-stack' }"
           @click.prevent="scrollTo('tech-stack')"
@@ -114,6 +111,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   letter-spacing: -0.01em;
   text-decoration: none;
   transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 .header__logo-text:hover {
@@ -134,6 +132,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   position: relative;
   padding: 4px 0;
   transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 .header__link::after {

@@ -57,8 +57,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 28px;
-  margin-top: 48px;
+  gap: 120px;
+  margin-top: 8px;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -92,7 +92,7 @@ onMounted(() => {
 
 .carousel-controls__dots {
   display: flex;
-  gap: 50px;
+  gap: 100px;
 }
 
 @media (max-width: 600px) {

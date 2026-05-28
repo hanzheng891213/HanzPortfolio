@@ -18,8 +18,8 @@
           Welcome to my portfolio. I'm delighted to share my development work with you. If you're interested in collaborating, I'd be truly grateful.
         </p>
         <div class="hero-cta">
-          <a href="#portfolio" class="btn btn-primary">作品集</a>
-          <a href="#tech-stack" class="btn">技术栈</a>
+          <a class="btn btn-primary" @click.prevent="scrollTo('portfolio')">作品集</a>
+          <a class="btn" @click.prevent="scrollTo('tech-stack')">技术栈</a>
         </div>
       </div>
     </section>
@@ -57,6 +57,13 @@ import CarouselStage from '@/components/CarouselStage.vue'
 import TechCard from '@/components/TechCard.vue'
 import { projects } from '@/data/projects'
 import { skills } from '@/data/skills'
+
+function scrollTo(id: string) {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
+}
 </script>
 
 <style scoped>
@@ -225,7 +232,7 @@ import { skills } from '@/data/skills'
   font-family: var(--font-body);
   font-size: 1.05rem;
   color: var(--text-secondary);
-  margin-bottom: 3rem;
+  margin-bottom: 0rem;
   text-align: center;
   max-width: 540px;
   margin-left: auto;

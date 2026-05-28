@@ -81,7 +81,7 @@ onMounted(() => {
   position: relative;
   width: 100%;
   margin: 0 auto;
-  height: calc(var(--post-size) / 0.68 + 260px);
+  height: calc(var(--post-size) / 0.68 + 140px);
 }
 
 /* Tablet */
