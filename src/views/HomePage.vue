@@ -26,11 +26,16 @@
 
     <!-- ========== Portfolio Section ========== -->
     <section id="portfolio" class="landing-section landing-section--portfolio">
-      <p class="section-tag">/ Portfolio</p>
-      <h2 class="section-title">作品集</h2>
-      <p class="section-subtitle">精选项目展示</p>
-      <CarouselStage :projects="projects" />
+      <p ref="portfolioTagRef" class="section-tag">/ Portfolio</p>
+      <h2 ref="portfolioTitleRef" class="section-title">作品集</h2>
+      <p ref="portfolioSubtitleRef" class="section-subtitle">精选项目展示</p>
+      <div ref="carouselWrapperRef" class="carousel-reveal-wrapper">
+        <CarouselStage :projects="projects" />
+      </div>
     </section>
+
+    <!-- ========== Blog Section ========== -->
+    <BlogSection />
 
     <!-- ========== Tech Stack Section ========== -->
     <section id="tech-stack" class="landing-section landing-section--tech">
@@ -52,11 +57,14 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import ProfileCard from '@/components/ProfileCard.vue'
 import CarouselStage from '@/components/CarouselStage.vue'
 import TechCard from '@/components/TechCard.vue'
+import BlogSection from '@/components/BlogSection.vue'
 import { projects } from '@/data/projects'
 import { skills } from '@/data/skills'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 
 function scrollTo(id: string) {
   const el = document.getElementById(id)
@@ -64,6 +72,16 @@ function scrollTo(id: string) {
     el.scrollIntoView({ behavior: 'smooth' })
   }
 }
+
+const portfolioTagRef = ref<HTMLElement | null>(null)
+const portfolioTitleRef = ref<HTMLElement | null>(null)
+const portfolioSubtitleRef = ref<HTMLElement | null>(null)
+const carouselWrapperRef = ref<HTMLElement | null>(null)
+
+useScrollReveal(portfolioTagRef, { delay: 0 })
+useScrollReveal(portfolioTitleRef, { delay: 80 })
+useScrollReveal(portfolioSubtitleRef, { delay: 160 })
+useScrollReveal(carouselWrapperRef, { delay: 260, threshold: 0.05 })
 </script>
 
 <style scoped>
@@ -161,7 +179,7 @@ function scrollTo(id: string) {
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  font-family: var(--font-mono);
+  font-family: var(--font-btn);
   font-size: 14px;
   letter-spacing: 1.5px;
   text-decoration: none;
@@ -243,6 +261,16 @@ function scrollTo(id: string) {
 .landing-section--portfolio {
   padding-top: 40px;
   padding-bottom: 100px;
+}
+
+/* ── Scroll reveal ── */
+.scroll-revealed {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+.carousel-reveal-wrapper {
+  margin-top: 40px;
 }
 
 .landing-section--tech {

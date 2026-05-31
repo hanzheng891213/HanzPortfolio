@@ -6,7 +6,20 @@
     aria-label="切换联系方式菜单"
     :title="active ? '收起联系方式' : '查看联系方式'"
   >
-    <span></span>
+    <Transition name="icon-swap" mode="out-in">
+      <FontAwesomeIcon
+        v-if="active"
+        key="info"
+        :icon="['fas', 'circle-info']"
+        class="menu-btn__icon"
+      />
+      <FontAwesomeIcon
+        v-else
+        key="heart"
+        :icon="['fas', 'heart']"
+        class="menu-btn__icon"
+      />
+    </Transition>
   </button>
 </template>
 
@@ -22,130 +35,73 @@ defineEmits<{
 
 <style scoped>
 .menu-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
   position: absolute;
   top: 16px;
   right: 16px;
   cursor: pointer;
   z-index: 10;
-  background: var(--bg-secondary);
-  transition: background 0.3s ease;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: pop-btn 0.3s both ease-in-out 0.5s,
-    heartbeat 2s ease-in-out 1.8s infinite;
+    heartbeat 2.2s ease-in-out 1.8s infinite;
 }
 
-.menu-btn:hover {
-  animation: pop-btn 0.3s both ease-in-out 0.5s;
-  box-shadow: 0 0 0 6px var(--accent-glow);
+.menu-btn__icon {
+  font-size: 1.8rem;
+  color: var(--accent-coral);
 }
 
-.menu-btn--active {
-  animation: pop-btn 0.3s both ease-in-out 0.5s;
+.menu-btn--active .menu-btn__icon {
+  color: var(--accent);
 }
 
+/* ── Icon swap transitions ── */
+.icon-swap-enter-active {
+  animation: icon-in 0.35s ease;
+}
+
+.icon-swap-leave-active {
+  animation: icon-out 0.35s ease;
+}
+
+@keyframes icon-in {
+  from {
+    transform: scale(0) rotate(-120deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes icon-out {
+  from {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+/* ── Button animations ── */
 @keyframes pop-btn {
-  0% {
-    transform: scale(0);
-  }
-  80% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0%   { transform: scale(0); }
+  80%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 @keyframes heartbeat {
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 var(--accent-glow);
-  }
-  12% {
-    transform: scale(1.3);
-    box-shadow: 0 0 0 2px var(--accent-glow);
-  }
-  24% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 var(--accent-glow);
-  }
-  36% {
-    transform: scale(1.2);
-    box-shadow: 0 0 0 1px var(--accent-glow);
-  }
-  48% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 var(--accent-glow);
-  }
-}
-
-/* Three lines via span + pseudo-elements */
-.menu-btn span {
-  width: 54%;
-  height: 2px;
-  background: var(--text-primary);
-  position: absolute;
-  top: 50%;
-  left: 23%;
-  transform: translateY(-50%);
-  animation: to-hamburger 0.3s forwards ease-in-out;
-  border-radius: 1px;
-}
-
-.menu-btn span::before,
-.menu-btn span::after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background: var(--text-primary);
-  position: absolute;
-  right: 0;
-  border-radius: 1px;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease, width 0.3s ease, margin-top 0.3s ease;
-}
-
-.menu-btn span::before {
-  margin-top: -7px;
-}
-
-.menu-btn span::after {
-  margin-top: 7px;
-}
-
-/* Active — arrow state */
-.menu-btn--active span {
-  animation: to-arrow 0.3s forwards ease-in-out;
-}
-
-.menu-btn--active span::before,
-.menu-btn--active span::after {
-  width: 54%;
-  right: -1px;
-}
-
-.menu-btn--active span::before {
-  transform: rotate(45deg);
-}
-
-.menu-btn--active span::after {
-  transform: rotate(-45deg);
-}
-
-@keyframes to-hamburger {
-  from {
-    transform: translateY(-50%) rotate(-180deg);
-  }
-}
-
-@keyframes to-arrow {
-  from {
-    transform: translateY(-50%) rotate(0deg);
-  }
-  to {
-    transform: translateY(-50%) rotate(180deg);
-  }
+  0%, 100% { transform: scale(1); }
+  14%      { transform: scale(1.25); }
+  28%      { transform: scale(1); }
+  42%      { transform: scale(1.15); }
+  56%      { transform: scale(1); }
 }
 </style>

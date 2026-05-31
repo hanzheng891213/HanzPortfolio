@@ -23,7 +23,12 @@ import {
   faCode,
   faGears,
   faNetworkWired,
-  faEllipsis
+  faEllipsis,
+  faPenToSquare,
+  faHeart,
+  faXmark,
+  faCircleUser,
+  faCircleInfo
 } from '@fortawesome/free-solid-svg-icons'
 
 // Brand icons
@@ -48,6 +53,11 @@ library.add(
   faGears,
   faNetworkWired,
   faEllipsis,
+  faPenToSquare,
+  faHeart,
+  faXmark,
+  faCircleUser,
+  faCircleInfo,
   faGithub,
   faVuejs,
   faWeixin

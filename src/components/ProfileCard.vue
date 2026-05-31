@@ -55,7 +55,7 @@ const menuOpen = ref(false)
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #43dfea24;
+  background: var(--profile-head-bg);
   transform-origin: 0 0;
 }
 
@@ -69,7 +69,7 @@ const menuOpen = ref(false)
   z-index: 3;
   border-radius: 50%;
   border: 6px solid var(--bg-card);
-  box-shadow: 0 0 0 2px var(--accent-dim), 0 8px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 2px var(--accent-dim), 0 8px 30px var(--shadow-color);
   object-fit: cover;
   opacity: 0.9;
 }
@@ -84,9 +84,9 @@ const menuOpen = ref(false)
 }
 
 .name {
-  font-family: var(--font-display);
+  font-family: 'SimHei', 'Heiti SC', 'Microsoft YaHei', sans-serif;
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 1000;
   line-height: 1;
   color: var(--text-primary);
 }

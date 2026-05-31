@@ -156,7 +156,7 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   -webkit-box-reflect: below 6px
-    linear-gradient(transparent 55%, rgba(0, 0, 0, 0.3));
+    linear-gradient(transparent 55%, var(--carousel-overlay));
 }
 
 /* 清除 2D 布局遗留的 margin */

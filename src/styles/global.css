@@ -2,30 +2,40 @@
 :root {
   --font-display: 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
   --font-body: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', sans-serif;
-  --font-kai: 'KaiTi', 'STKaiti', 'Kaiti SC', serif;
+  --font-kai: 'SimSun', 'STSong', 'Songti SC', 'Noto Serif SC', serif;
   --font-mono: 'Consolas', 'Courier New', 'Source Code Pro', monospace;
+  --font-btn: 'SimHei', 'Heiti SC', 'Microsoft YaHei', sans-serif;
 
   /* Light Theme — soft mint + warm cream */
-  --bg-primary: #b3e5ce;
-  --bg-secondary: #72c3b0d5;
+  --bg-primary: #beefd8;
+  --bg-secondary: #75c9b5d5;
   --bg-card: #4d979819;
   --bg-card-hover: #5aaba126;
-  --bg-input: #9cdfd0;
+  --bg-input: #89c6ba;
   --text-primary: #1a1c1d;
   --text-secondary: #4a5556;
   --text-muted: #7a8a8b;
   --border-color: rgba(0, 0, 0, 0.06);
   --border-light: rgba(0, 0, 0, 0.08);
   --shadow-color: rgba(0, 0, 0, 0.08);
-  --accent: #1a7a6e;
+  --accent: #0c6f62;
   --accent-bright: #28b8ac;
-  --accent-dim: #0f5c52;
-  --accent-coral: #5ae8c5;
-  --accent-glow: rgba(26, 122, 110, 0.18);
+  --accent-dim: #0a7062;
+  --accent-coral: #61ddc6;
+  --accent-glow: rgba(52, 183, 186, 0.497);
   --accent-glow-strong: rgba(26, 122, 110, 0.25);
   --accent-coral-glow: rgba(90, 232, 225, 0.12);
   --glass-bg: rgba(199, 251, 243, 0.603);
   --glass-border: rgba(0, 0, 0, 0.05);
+  --portfolio-cover-bg: #60b3a4;
+  --portfolio-cover-placeholder: #52f1e6ed;
+  --profile-head-bg: #157d653f;
+  --carousel-overlay: rgba(0, 0, 0, 0.3);
+  --carousel-item-overlay: rgba(23, 23, 23, 0.45);
+  --carousel-item-overlay-light: rgba(23, 23, 23, 0.3);
+  --carousel-item-text: #fff;
+  --color-danger: #e74c3c;
+  --color-danger-bg: rgba(231, 76, 60, 0.15);
 }
 
 html.dark {
@@ -49,6 +59,15 @@ html.dark {
   --accent-coral-glow: rgba(110, 240, 214, 0.12);
   --glass-bg: rgba(26, 63, 67, 0.372);
   --glass-border: rgba(255, 255, 255, 0.06);
+  --portfolio-cover-bg: #164d44;
+  --portfolio-cover-placeholder: #26828eee;
+  --profile-head-bg: #5ce0e82a;
+  --carousel-overlay: rgba(0, 0, 0, 0.45);
+  --carousel-item-overlay: rgba(10, 10, 10, 0.55);
+  --carousel-item-overlay-light: rgba(10, 10, 10, 0.4);
+  --carousel-item-text: #fff;
+  --color-danger: #e97b72;
+  --color-danger-bg: rgba(233, 123, 114, 0.15);
 }
 
 /* ===== Reset ===== */

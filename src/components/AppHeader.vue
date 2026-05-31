@@ -1,63 +1,100 @@
 <template>
   <header class="header" :class="{ 'header--scrolled': scrolled }">
     <div class="header__inner">
-      <a class="header__logo" @click.prevent="scrollTo('home')">
-        <div class="header__logo-text">Han Zheng</div>
+      <a class="header__logo" @click.prevent="navigateTo('home')">
+        <div class="header__logo-text">Han</div>
       </a>
       <nav class="header__nav">
         <a
           class="header__link"
-          :class="{ 'header__link--active': activeSection === 'home' }"
-          @click.prevent="scrollTo('home')"
+          :class="{ 'header__link--active': isHomeActive && activeSection === 'home' }"
+          @click.prevent="navigateTo('home')"
         >
           首页
         </a>
         <a
           class="header__link"
-          :class="{ 'header__link--active': activeSection === 'portfolio' }"
-          @click.prevent="scrollTo('portfolio')"
+          :class="{ 'header__link--active': isHomeActive && activeSection === 'portfolio' }"
+          @click.prevent="navigateTo('portfolio')"
         >
           作品集
         </a>
         <a
           class="header__link"
-          :class="{ 'header__link--active': activeSection === 'tech-stack' }"
-          @click.prevent="scrollTo('tech-stack')"
+          :class="{ 'header__link--active': isHomeActive && activeSection === 'blog' }"
+          @click.prevent="navigateTo('blog')"
+        >
+          博客
+        </a>
+        <a
+          class="header__link"
+          :class="{ 'header__link--active': isHomeActive && activeSection === 'tech-stack' }"
+          @click.prevent="navigateTo('tech-stack')"
         >
           技术栈
         </a>
       </nav>
-      <button
-        class="header__theme-btn"
-        @click="theme.toggle()"
-        :aria-label="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
-        :title="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
-      >
-        <FontAwesomeIcon :icon="theme.isDark ? ['fas', 'sun'] : ['fas', 'moon']" class="header__theme-icon" />
-      </button>
+      <div class="header__actions">
+        <router-link to="/login" class="header__login-btn" :title="auth.isAuthenticated ? '已登录' : '登录'">
+          <FontAwesomeIcon :icon="['fas', 'circle-user']" class="header__login-icon" />
+        </router-link>
+        <button
+          class="header__theme-btn"
+          @click="theme.toggle()"
+          :aria-label="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+          :title="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+        >
+          <FontAwesomeIcon :icon="theme.isDark ? ['fas', 'sun'] : ['fas', 'moon']" class="header__theme-icon" />
+        </button>
+      </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
+import { useAuthStore } from '@/stores/auth'
 
+const route = useRoute()
+const router = useRouter()
 const theme = useThemeStore()
+const auth = useAuthStore()
+
+const isHomeActive = computed(() => route.path === '/')
+
 const scrolled = ref(false)
 const activeSection = ref('home')
 
-function scrollTo(id: string) {
+function scrollToSection(id: string) {
   const el = document.getElementById(id)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })
+    return true
   }
+  return false
+}
+
+async function navigateTo(id: string) {
+  if (route.path === '/') {
+    scrollToSection(id)
+    return
+  }
+  await router.push('/')
+  // Retry until the lazy-loaded component renders the target element
+  let tries = 0
+  const check = () => {
+    if (scrollToSection(id)) return
+    if (++tries < 10) requestAnimationFrame(check)
+  }
+  requestAnimationFrame(check)
 }
 
 function onScroll() {
   scrolled.value = window.scrollY > 20
 
-  const sections = ['home', 'portfolio', 'tech-stack']
+  const sections = ['home', 'portfolio', 'blog', 'tech-stack']
   const viewMiddle = window.scrollY + window.innerHeight / 3
 
   for (const id of sections) {
@@ -103,7 +140,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   justify-content: space-between;
 }
 
-.header__logo-text {
+.header__logo {
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 900;
@@ -114,9 +151,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   cursor: pointer;
 }
 
-.header__logo-text:hover {
+.header__logo:hover {
   color: var(--accent);
-  transform: scale(0.95)  translateY(-1px);
+  transform: scale(0.95) translateY(-1px);
   transition: ease-in-out;
 }
 
@@ -133,6 +170,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   padding: 4px 0;
   transition: color 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .header__link::after {
@@ -157,6 +195,31 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 .header__link--active {
   color: var(--accent);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__login-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.header__login-btn:hover {
+  color: var(--accent);
+  background: var(--bg-secondary);
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 .header__theme-btn {
@@ -191,7 +254,8 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
     padding: 10px 16px;
   }
 
-  .header__logo-text {
+  .header__logo-text,
+  .header__logo {
     font-size: 1.2rem;
   }
 
@@ -203,7 +267,8 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
     font-size: 0.82rem;
   }
 
-  .header__theme-btn {
+  .header__theme-btn,
+  .header__login-btn {
     width: 36px;
     height: 36px;
     font-size: 1rem;

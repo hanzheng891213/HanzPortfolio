@@ -38,7 +38,7 @@ defineProps<{
   cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
-  background: #164d44;
+  background: var(--portfolio-cover-bg);
   border: 1px solid var(--border-color);
   transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
   text-decoration: none;
@@ -67,7 +67,7 @@ defineProps<{
 .carousel-item__placeholder {
   width: 100%;
   height: 100%;
-  background: #26828eee;
+  background: var(--portfolio-cover-placeholder);
 }
 
 /* ── Text overlay ── */
@@ -80,18 +80,18 @@ defineProps<{
   align-items: center;
   text-align: center;
   padding: 28px;
-  background: rgba(23, 23, 23, 0.45);
+  background: var(--carousel-item-overlay);
   transition: background 0.4s;
 }
 
 .carousel-item:hover .carousel-item__overlay {
-  background: rgba(23, 23, 23, 0.3);
+  background: var(--carousel-item-overlay-light);
 }
 
 .carousel-item__title {
   font-family: var(--font-display);
   font-size: 1.3rem;
-  color: #fff;
+  color: var(--carousel-item-text);
   margin-bottom: 8px;
   letter-spacing: -0.01em;
 }
