@@ -1,8 +1,26 @@
 <template>
   <div class="admin-page">
+    <!-- Mobile top bar -->
+    <div class="admin-mobile-bar">
+      <button class="admin-mobile-bar__btn" @click="showSidebar = !showSidebar">
+        <FontAwesomeIcon :icon="['fas', showSidebar ? 'xmark' : 'bars']" />
+      </button>
+      <span class="admin-mobile-bar__title">
+        {{ editingId !== null || isNewPost ? (isNewPost ? '新建文章' : '编辑文章') : '文章管理' }}
+      </span>
+      <button
+        v-if="editingId !== null || isNewPost"
+        class="admin-mobile-bar__btn"
+        @click="cancelEdit"
+      >
+        <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
+      </button>
+      <span v-else style="width:36px"></span>
+    </div>
+
     <div class="page-container admin-layout">
       <!-- Sidebar: post list -->
-      <aside class="admin-sidebar">
+      <aside class="admin-sidebar" :class="{ 'admin-sidebar--open': showSidebar }">
         <div class="admin-sidebar__header">
           <h2 class="admin-sidebar__title">文章管理</h2>
           <button class="admin-new-btn" @click="startNewPost">+ 新建</button>
@@ -16,7 +34,7 @@
             :key="post.id"
             class="admin-post-item"
             :class="{ 'admin-post-item--active': editingId === post.id }"
-            @click="editPost(post)"
+            @click="selectPost(post)"
           >
             <div class="admin-post-item__main">
               <span class="admin-post-item__title">{{ post.title }}</span>
@@ -30,7 +48,7 @@
       </aside>
 
       <!-- Editor -->
-      <main class="admin-editor">
+      <main class="admin-editor" :class="{ 'admin-editor--hidden-mobile': !(editingId !== null || isNewPost) && showSidebar }">
         <template v-if="editingId !== null || isNewPost">
           <div class="admin-editor__field">
             <label class="admin-editor__label">标题</label>
@@ -76,6 +94,7 @@ const auth = useAuthStore()
 const editingId = ref<number | null>(null)
 const isNewPost = ref(false)
 const saving = ref(false)
+const showSidebar = ref(true)
 
 const form = reactive({
   title: '',
@@ -91,15 +110,17 @@ function fmtDate(d: string) {
 function startNewPost() {
   editingId.value = null
   isNewPost.value = true
+  showSidebar.value = false
   form.title = ''
   form.summary = ''
   form.tagsStr = ''
   form.content = ''
 }
 
-function editPost(post: import('@/types').BlogPost) {
+function selectPost(post: import('@/types').BlogPost) {
   editingId.value = post.id
   isNewPost.value = false
+  showSidebar.value = false
   form.title = post.title
   form.summary = post.summary
   form.tagsStr = post.tags.join(', ')
@@ -109,6 +130,7 @@ function editPost(post: import('@/types').BlogPost) {
 function cancelEdit() {
   editingId.value = null
   isNewPost.value = false
+  showSidebar.value = true
   form.title = ''
   form.summary = ''
   form.tagsStr = ''
@@ -163,6 +185,44 @@ onMounted(() => {
   z-index: 1;
 }
 
+/* ── Mobile top bar ── */
+.admin-mobile-bar {
+  display: none;
+  position: sticky;
+  top: 80px;
+  z-index: 30;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  margin: -40px -20px 20px;
+}
+
+.admin-mobile-bar__btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.admin-mobile-bar__btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.admin-mobile-bar__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
 .admin-layout {
   display: flex;
   gap: 32px;
@@ -192,17 +252,20 @@ onMounted(() => {
 
 .admin-sidebar__title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--text-primary);
+  margin: 0;
 }
 
 .admin-new-btn {
   font-family: var(--font-btn);
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
   padding: 6px 14px;
   border: 1px solid var(--accent);
   border-radius: 6px;
   color: var(--accent);
+  background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -214,7 +277,7 @@ onMounted(() => {
 
 .admin-empty-list {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: center;
   padding: 40px 0;
 }
@@ -223,10 +286,10 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 .admin-post-item:hover {
@@ -246,7 +309,7 @@ onMounted(() => {
 }
 
 .admin-post-item__title {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -254,7 +317,7 @@ onMounted(() => {
 }
 
 .admin-post-item__date {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
 }
 
@@ -268,7 +331,7 @@ onMounted(() => {
   border-radius: 6px;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   opacity: 0;
 }
 
@@ -295,18 +358,19 @@ onMounted(() => {
   color: var(--text-muted);
   text-align: center;
   padding: 80px 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .admin-editor__field {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .admin-editor__label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   margin-bottom: 6px;
+  letter-spacing: 0.3px;
 }
 
 .admin-editor__input {
@@ -317,9 +381,9 @@ onMounted(() => {
   background: var(--bg-input);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 .admin-editor__input:focus {
@@ -334,10 +398,10 @@ onMounted(() => {
   background: var(--bg-input);
   color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   outline: none;
   resize: vertical;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 .admin-editor__textarea:focus {
@@ -363,11 +427,11 @@ onMounted(() => {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .admin-editor__save:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .admin-editor__save:disabled {
@@ -384,7 +448,7 @@ onMounted(() => {
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 .admin-editor__cancel:hover {
@@ -392,17 +456,79 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .admin-mobile-bar {
+    display: flex;
+  }
+
   .admin-layout {
     flex-direction: column;
+    gap: 0;
   }
 
   .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-height: 240px;
+    height: 100dvh;
+    max-height: none;
+    z-index: 20;
+    border-radius: 0;
+    border: none;
+    padding: 0 16px 16px;
+    padding-top: 130px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .admin-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .admin-editor--hidden-mobile {
+    display: none;
   }
 
   .admin-editor {
-    padding: 20px;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+    padding: 4px 0 40px;
+  }
+
+  .admin-editor__placeholder {
+    padding: 60px 20px;
+    font-size: 0.9rem;
+  }
+
+  .admin-editor__field {
+    margin-bottom: 14px;
+  }
+
+  .admin-editor__input,
+  .admin-editor__textarea {
+    font-size: 16px; /* prevent iOS zoom */
+  }
+
+  .admin-editor__textarea {
+    min-height: 260px;
+  }
+
+  .admin-editor__actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-primary);
+    padding: 12px 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .admin-editor__save,
+  .admin-editor__cancel {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
   }
 }
 </style>
