@@ -1,34 +1,22 @@
 import type { BlogUser } from '@/types'
-
-const USERS: BlogUser[] = [
-  { email: 'hanzheng891213@gmail.com', password: import.meta.env.VITE_ADMIN_PASSWORD, role: 'admin' },
-  { email: 'O_O@visitor.com', password: import.meta.env.VITE_VISITOR_PASSWORD, role: 'visitor' }
-]
+import { api } from './api'
 
 const TOKEN_KEY = 'blog_token'
 const USER_KEY = 'blog_user'
 
-function stripPassword(user: BlogUser): BlogUser {
-  const { password, ...safe } = user
-  return safe
+export async function login(email: string, password: string): Promise<{ token: string; user: BlogUser }> {
+  const data = await api<{ token: string; user: BlogUser }>('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  })
+  localStorage.setItem(TOKEN_KEY, data.token)
+  localStorage.setItem(USER_KEY, JSON.stringify(data.user))
+  return data
 }
 
-export function login(email: string, password: string): Promise<{ token: string; user: BlogUser }> {
-  const user = USERS.find(u => u.email === email && u.password === password)
-  if (!user) {
-    return Promise.reject(new Error('邮箱或密码错误'))
-  }
-  const token = btoa(`${user.email}:${Date.now()}`)
-  const safeUser = stripPassword(user)
-  localStorage.setItem(TOKEN_KEY, token)
-  localStorage.setItem(USER_KEY, JSON.stringify(safeUser))
-  return Promise.resolve({ token, user: safeUser })
-}
-
-export function logout(): Promise<void> {
+export async function logout(): Promise<void> {
   localStorage.removeItem(TOKEN_KEY)
   localStorage.removeItem(USER_KEY)
-  return Promise.resolve()
 }
 
 export function getStoredUser(): BlogUser | null {

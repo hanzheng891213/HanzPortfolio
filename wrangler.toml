@@ -1,6 +1,14 @@
 name = "hanzdev"
+main = "worker/index.ts"
 compatibility_date = "2025-05-28"
 
 [assets]
 directory = "./dist"
 not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hanzdev"
+database_id = "1df488de-1493-4b1e-b862-6b41e9e6615c"
+
+[vars]

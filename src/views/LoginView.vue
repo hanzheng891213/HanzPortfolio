@@ -18,14 +18,33 @@
         </div>
         <div class="login-field">
           <label class="login-label" for="password">密码</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            class="login-input"
-            placeholder="密码"
-            required
-          />
+          <div class="password-wrapper">
+            <input
+              id="password"
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              class="login-input password-input"
+              placeholder="密码"
+              required
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              :title="showPassword ? '隐藏密码' : '显示密码'"
+              @click="showPassword = !showPassword"
+            >
+              <svg v-if="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <path d="m14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
         </div>
         <p v-if="errMsg" class="login-error">{{ errMsg }}</p>
         <button type="submit" class="login-btn" :disabled="loading">
@@ -46,6 +65,7 @@ const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const showPassword = ref(false)
 const errMsg = ref('')
 const loading = ref(false)
 
@@ -141,6 +161,38 @@ async function handleLogin() {
 
 .login-input:focus {
   border-color: var(--accent);
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 100%;
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
 }
 
 .login-error {

@@ -4,3 +4,5 @@ dist/
 .vscode/
 plan.md
 .env
+.dev.vars
+.wrangler/
