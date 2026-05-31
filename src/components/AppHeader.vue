@@ -36,7 +36,7 @@
       </nav>
       <div class="header__actions">
         <router-link to="/login" class="header__login-btn" :title="auth.isAuthenticated ? '已登录' : '登录'">
-          <FontAwesomeIcon :icon="['fas', 'circle-user']" class="header__login-icon" />
+          <i class="fa-solid fa-circle-user header__login-icon"></i>
         </router-link>
         <button
           class="header__theme-btn"
@@ -44,7 +44,7 @@
           :aria-label="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
           :title="theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
         >
-          <FontAwesomeIcon :icon="theme.isDark ? ['fas', 'sun'] : ['fas', 'moon']" class="header__theme-icon" />
+          <i :class="theme.isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" class="header__theme-icon"></i>
         </button>
       </div>
     </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
 import { useAuthStore } from '@/stores/auth'
@@ -70,7 +70,8 @@ const activeSection = ref('home')
 function scrollToSection(id: string) {
   const el = document.getElementById(id)
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
+    const top = el.getBoundingClientRect().top + window.scrollY - 90
+    window.scrollTo({ top, behavior: 'smooth' })
     return true
   }
   return false
@@ -81,14 +82,15 @@ async function navigateTo(id: string) {
     scrollToSection(id)
     return
   }
+  // Navigate back to home first
   await router.push('/')
-  // Retry until the lazy-loaded component renders the target element
-  let tries = 0
-  const check = () => {
+  // Wait for lazy-loaded components to mount
+  await nextTick()
+  // Retry with increasing delays for deeply nested async components (e.g. BlogSection)
+  for (const delay of [0, 50, 150, 350]) {
+    await new Promise(r => setTimeout(r, delay))
     if (scrollToSection(id)) return
-    if (++tries < 10) requestAnimationFrame(check)
   }
-  requestAnimationFrame(check)
 }
 
 function onScroll() {

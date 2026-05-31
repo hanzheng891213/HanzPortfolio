@@ -8,7 +8,7 @@
           <p class="section-subtitle">记录技术思考与实践总结</p>
         </div>
         <router-link v-if="auth.isAdmin" to="/blog/admin" class="publish-btn">
-          <FontAwesomeIcon :icon="['fas', 'pen-to-square']" />
+          <i class="fa-solid fa-pen-to-square"></i>
           发布文章
         </router-link>
       </div>

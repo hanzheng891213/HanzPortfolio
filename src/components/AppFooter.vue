@@ -62,4 +62,28 @@ const year = new Date().getFullYear()
   color: var(--text-secondary);
   opacity: 0.7;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 22px 16px;
+  }
+
+  .footer__brand {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  .footer__links {
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+
+  .footer__link {
+    font-size: 0.82rem;
+  }
+
+  .footer__copy {
+    font-size: 0.72rem;
+  }
+}
 </style>

@@ -18,7 +18,7 @@
     <div class="blog-section__cta-wrap">
       <router-link to="/blog" class="blog-section__cta">
         浏览全部博客
-        <FontAwesomeIcon :icon="['fas', 'chevron-right']" class="blog-section__cta-icon" />
+        <i class="fa-solid fa-chevron-right blog-section__cta-icon"></i>
       </router-link>
     </div>
   </section>

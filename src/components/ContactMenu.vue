@@ -10,7 +10,7 @@
       :title="item.label"
       @click="handleItemClick(item)"
     >
-      <FontAwesomeIcon :icon="item.icon" class="contact-item__icon" />
+      <i :class="item.icon" class="contact-item__icon"></i>
       <span class="contact-item__label">{{ item.label }}</span>
     </a>
   </div>

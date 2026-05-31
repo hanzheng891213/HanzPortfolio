@@ -7,18 +7,8 @@
     :title="active ? '收起联系方式' : '查看联系方式'"
   >
     <Transition name="icon-swap" mode="out-in">
-      <FontAwesomeIcon
-        v-if="active"
-        key="info"
-        :icon="['fas', 'circle-info']"
-        class="menu-btn__icon"
-      />
-      <FontAwesomeIcon
-        v-else
-        key="heart"
-        :icon="['fas', 'heart']"
-        class="menu-btn__icon"
-      />
+      <i v-if="active" key="info" class="fa-solid fa-circle-info menu-btn__icon"></i>
+      <i v-else key="heart" class="fa-solid fa-heart menu-btn__icon"></i>
     </Transition>
   </button>
 </template>

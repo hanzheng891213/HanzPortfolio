@@ -9,7 +9,7 @@ export interface Project {
 export interface SkillCategory {
   id: number
   category: string
-  icon: [string, string]
+  icon: string
   description: string
 }
 

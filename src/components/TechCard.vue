@@ -1,7 +1,7 @@
 <template>
   <div class="tech-card" ref="cardRef">
     <div class="tech-card__accent"></div>
-    <FontAwesomeIcon v-if="icon" :icon="icon" class="tech-card__icon" />
+    <i v-if="icon" :class="icon" class="tech-card__icon"></i>
     <h3 class="tech-card__title">{{ category }}</h3>
     <p class="tech-card__desc">{{ description }}</p>
     <div class="tech-card__decoration" aria-hidden="true"></div>
@@ -14,7 +14,7 @@ import { ref, onMounted } from 'vue'
 const props = defineProps<{
   category: string
   description: string
-  icon?: [string, string]
+  icon?: string
   index?: number
 }>()
 

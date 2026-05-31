@@ -1,23 +1,5 @@
-<template>
+﻿<template>
   <div class="admin-page">
-    <!-- Mobile top bar -->
-    <div class="admin-mobile-bar">
-      <button class="admin-mobile-bar__btn" @click="showSidebar = !showSidebar">
-        <FontAwesomeIcon :icon="['fas', showSidebar ? 'xmark' : 'bars']" />
-      </button>
-      <span class="admin-mobile-bar__title">
-        {{ editingId !== null || isNewPost ? (isNewPost ? '新建文章' : '编辑文章') : '文章管理' }}
-      </span>
-      <button
-        v-if="editingId !== null || isNewPost"
-        class="admin-mobile-bar__btn"
-        @click="cancelEdit"
-      >
-        <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
-      </button>
-      <span v-else style="width:36px"></span>
-    </div>
-
     <div class="page-container admin-layout">
       <!-- Sidebar: post list -->
       <aside class="admin-sidebar" :class="{ 'admin-sidebar--open': showSidebar }">
@@ -41,15 +23,30 @@
               <span class="admin-post-item__date">{{ fmtDate(post.createdAt) }}</span>
             </div>
             <button class="admin-post-item__del" @click.stop="handleDelete(post.id)" title="删除">
-              <FontAwesomeIcon :icon="['fas', 'xmark']" />
+              <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
         </div>
       </aside>
 
       <!-- Editor -->
-      <main class="admin-editor" :class="{ 'admin-editor--hidden-mobile': !(editingId !== null || isNewPost) && showSidebar }">
-        <template v-if="editingId !== null || isNewPost">
+      <main
+        class="admin-editor"
+        :class="{ 'admin-editor--hidden-mobile': !isEditing && showSidebar }"
+      >
+        <!-- Mobile header inside editor -->
+        <div class="admin-editor__mobile-bar">
+          <button class="admin-editor__mobile-back" @click="cancelEdit">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>文章列表</span>
+          </button>
+          <span class="admin-editor__mobile-title">
+            {{ isNewPost ? '新建文章' : '编辑文章' }}
+          </span>
+          <span class="admin-editor__mobile-spacer"></span>
+        </div>
+
+        <template v-if="isEditing">
           <div class="admin-editor__field">
             <label class="admin-editor__label">标题</label>
             <input v-model="form.title" class="admin-editor__input" placeholder="文章标题" />
@@ -77,24 +74,30 @@
           选择左侧文章进行编辑，或点击「新建」创建新文章
         </div>
       </main>
+
+      <!-- Mobile sidebar toggle (bottom bar) -->
+      <button class="admin-mobile-toggle" @click="showSidebar = !showSidebar">
+        <i :class="showSidebar ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+        <span>{{ showSidebar ? '关闭列表' : '文章列表' }}</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useBlogStore } from '@/stores/blog'
 import { useAuthStore } from '@/stores/auth'
 
-const router = useRouter()
 const blog = useBlogStore()
 const auth = useAuthStore()
 
 const editingId = ref<number | null>(null)
 const isNewPost = ref(false)
 const saving = ref(false)
-const showSidebar = ref(true)
+const showSidebar = ref(false)
+
+const isEditing = computed(() => editingId.value !== null || isNewPost.value)
 
 const form = reactive({
   title: '',
@@ -185,44 +188,6 @@ onMounted(() => {
   z-index: 1;
 }
 
-/* ── Mobile top bar ── */
-.admin-mobile-bar {
-  display: none;
-  position: sticky;
-  top: 80px;
-  z-index: 30;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border-color);
-  margin: -40px -20px 20px;
-}
-
-.admin-mobile-bar__btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: all 0.2s ease;
-}
-
-.admin-mobile-bar__btn:hover {
-  background: var(--bg-card-hover);
-  color: var(--text-primary);
-}
-
-.admin-mobile-bar__title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: var(--text-primary);
-}
-
 .admin-layout {
   display: flex;
   gap: 32px;
@@ -231,7 +196,7 @@ onMounted(() => {
 
 /* ── Sidebar ── */
 .admin-sidebar {
-  width: 300px;
+  width: 280px;
   flex-shrink: 0;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -354,6 +319,10 @@ onMounted(() => {
   padding: 28px;
 }
 
+.admin-editor__mobile-bar {
+  display: none;
+}
+
 .admin-editor__placeholder {
   color: var(--text-muted);
   text-align: center;
@@ -455,16 +424,21 @@ onMounted(() => {
   border-color: var(--text-secondary);
 }
 
-@media (max-width: 768px) {
-  .admin-mobile-bar {
-    display: flex;
-  }
+/* ── Mobile toggle button ── */
+.admin-mobile-toggle {
+  display: none;
+}
 
+/* ================================================
+   Mobile
+   ================================================ */
+@media (max-width: 768px) {
   .admin-layout {
     flex-direction: column;
     gap: 0;
   }
 
+  /* Sidebar — slide-in drawer */
   .admin-sidebar {
     position: fixed;
     top: 0;
@@ -472,11 +446,13 @@ onMounted(() => {
     width: 100%;
     height: 100dvh;
     max-height: none;
-    z-index: 20;
+    z-index: 50;
     border-radius: 0;
     border: none;
-    padding: 0 16px 16px;
-    padding-top: 130px;
+    padding: 0 16px 100px;
+    padding-top: 80px;
+    background: var(--bg-primary);
+    overflow-y: auto;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
   }
@@ -485,6 +461,13 @@ onMounted(() => {
     transform: translateX(0);
   }
 
+  .admin-post-item__del {
+    opacity: 1;
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Editor */
   .admin-editor--hidden-mobile {
     display: none;
   }
@@ -493,12 +476,46 @@ onMounted(() => {
     border-radius: 0;
     border: none;
     background: transparent;
-    padding: 4px 0 40px;
+    padding: 0 20px 80px;
   }
 
   .admin-editor__placeholder {
-    padding: 60px 20px;
+    padding: 80px 20px;
     font-size: 0.9rem;
+  }
+
+  /* Mobile bar inside editor */
+  .admin-editor__mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+    background: var(--bg-primary);
+  }
+
+  .admin-editor__mobile-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    padding: 4px;
+    
+  }
+
+  .admin-editor__mobile-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .admin-editor__mobile-spacer {
+    width: 60px;
   }
 
   .admin-editor__field {
@@ -507,7 +524,7 @@ onMounted(() => {
 
   .admin-editor__input,
   .admin-editor__textarea {
-    font-size: 16px; /* prevent iOS zoom */
+    font-size: 16px;
   }
 
   .admin-editor__textarea {
@@ -529,6 +546,31 @@ onMounted(() => {
     text-align: center;
     padding: 12px;
     font-size: 14px;
+  }
+
+  /* Floating toggle button */
+  .admin-mobile-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    padding: 12px 24px;
+    border-radius: 28px;
+    background: var(--accent);
+    color: var(--bg-primary);
+    font-family: var(--font-btn);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px var(--accent-glow-strong);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .admin-mobile-toggle:active {
+    transform: translateX(-50%) scale(0.95);
   }
 }
 </style>

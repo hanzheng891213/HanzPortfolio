@@ -11,11 +11,11 @@
       <p class="blog-card__summary">{{ post.summary }}</p>
       <div class="blog-card__footer">
         <span class="blog-card__stat">
-          <FontAwesomeIcon :icon="['fas', 'comment']" />
+          <i class="fa-solid fa-comment"></i>
           {{ post.viewCount }} 阅读
         </span>
         <span class="blog-card__stat">
-          <FontAwesomeIcon :icon="['fas', 'heart' as any]" />
+          <i class="fa-solid fa-heart"></i>
           {{ post.likeCount }} 赞
         </span>
       </div>

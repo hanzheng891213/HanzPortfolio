@@ -5,7 +5,7 @@
       @click="$emit('prev')"
       aria-label="上一个作品"
     >
-      <FontAwesomeIcon icon="chevron-left" />
+      <i class="fa-solid fa-chevron-left"></i>
     </button>
 
     <div class="carousel-controls__dots">
@@ -24,7 +24,7 @@
       @click="$emit('next')"
       aria-label="下一个作品"
     >
-      <FontAwesomeIcon icon="chevron-right" />
+      <i class="fa-solid fa-chevron-right"></i>
     </button>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="blog-detail-page">
     <div class="page-container blog-detail-container">
       <router-link to="/blog" class="back-link">
-        <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
+        <i class="fa-solid fa-chevron-left"></i>
         返回博客列表
       </router-link>
 
@@ -32,10 +32,7 @@
             :disabled="liked || liking"
             @click="handleLike"
           >
-            <FontAwesomeIcon
-              :icon="['fas', 'heart']"
-              class="like-btn__icon"
-            />
+            <i class="fa-solid fa-heart like-btn__icon"></i>
             <span>{{ blog.currentPost.likeCount }} 赞</span>
           </button>
         </div>
