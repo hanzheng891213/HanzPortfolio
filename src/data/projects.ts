@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: 'RAG-Listing-Copilot',
     description: '基于 Vue 3 ',
     cover: '',
-    link: 'https://github.com/hanzheng891213/RAG-Listing-Copilot'
+    link: 'rag.hanzdev.com'
   },
   {
     id: 2,
