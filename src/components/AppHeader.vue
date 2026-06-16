@@ -2,7 +2,8 @@
   <header class="header" :class="{ 'header--scrolled': scrolled }">
     <div class="header__inner">
       <a class="header__logo" @click.prevent="navigateTo('home')">
-        <div class="header__logo-text">Han</div>
+        <span class="header__logo-icon">H</span>
+        <span class="header__logo-text">Hanz</span>
       </a>
       <nav class="header__nav">
         <a
@@ -151,12 +152,38 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   text-decoration: none;
   transition: color 0.3s ease;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: var(--bg-primary);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px var(--accent-glow);
+  opacity: 0.8;
+}
+
+.header__logo:hover .header__logo-icon {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 4px 16px var(--accent-glow-strong);
 }
 
 .header__logo:hover {
-  color: var(--accent);
-  transform: scale(0.95) translateY(-1px);
-  transition: ease-in-out;
+  color: var(--text-primary);
+  transform: none;
 }
 
 .header__nav {
@@ -259,6 +286,13 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   .header__logo-text,
   .header__logo {
     font-size: 1.2rem;
+  }
+
+  .header__logo-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+    border-radius: 8px;
   }
 
   .header__nav {

@@ -13,7 +13,7 @@ export const projects: Project[] = [
     title: 'Second-Hande-Shop',
     description: '基于uniapp',
     cover: '',
-    link: 'https://github.com/hanzheng891213/SecondHandeShop'
+    link: 'https://shs.hanzdev.com/'
   },
   {
     id: 3,
